@@ -1,0 +1,3 @@
+set terminal png
+set output 'spectre.png'
+plot 'spectre.txt' w l
