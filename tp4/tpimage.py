@@ -31,10 +31,10 @@ from filtrages import *
 
 
 def main():
-    argc=len(sys.argv)
-    if argc<3 :
-        print "usage : ", sys.argv[0], " fichier.png fichier.png"
-        return
+    # argc=len(sys.argv)
+    # if argc<3 :
+    #     print ("usage : ", sys.argv[0], " fichier.png fichier.png")
+    #     return
     
 
     
@@ -43,30 +43,32 @@ def main():
 
     img1=Image.open(sys.argv[1])
     (xsize,ysize) = img1.size
-    print "Lecture OK ( H =", ysize, " L =", xsize,")"
+    print ("Lecture OK ( H =", ysize, " L =", xsize,")")
     img1.show()
+    #inversion_videoNB(img1,xsize,ysize).show()
+    #plusClairNB(img1,xsize,ysize).show()
+    deriv1xNB(img1,xsize,ysize).show()
+    # if argc==4 :
+    #     img2=Image.open(sys.argv[2])
+    #     img4 = mouvement(img1,img2)
+    #     img4.show()
+    #     img4.save(sys.argv[3])
+    #     img4.close()
+    #     return
 
-    if argc==4 :
-        img2=Image.open(sys.argv[2])
-        img4 = mouvement(img1,img2)
-        img4.show()
-        img4.save(sys.argv[3])
-        img4.close()
-        return
+    # img2 = RotationNB(img1, xsize, ysize)
 
-    img2 = RotationNB(img1, xsize, ysize)
+    # img2.show()
+    # img2.save(sys.argv[2])
 
-    img2.show()
-    img2.save(sys.argv[2])
-
-    img3 = traitV(256,500, 100, 300)
-    img3.show()
+    # img3 = traitV(256,500, 100, 300)
+    # img3.show()
 
 
 
-    img1.close()
-    img2.close()
-    img3.close()
+    # img1.close()
+    # img2.close()
+    # img3.close()
 
 if __name__ == "__main__":
     main()
