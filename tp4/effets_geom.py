@@ -11,7 +11,6 @@ def effetFonteNB(img,  sx,  sy) :
             else:                
                 col = img.getpixel ((x,y))
                 nextPixel = img.getpixel((x,y+1))
-                print(col,nextPixel)
                 if nextPixel < col :
                     nextPixel = col
                     res.putpixel((x,y+1),nextPixel)
@@ -35,7 +34,7 @@ def quartImageNB(img,  sx,  sy) :
     return res
 
 def RotationNB(img,  sx,  sy) :
-    (a,b)=img.size;
+    (a,b)=img.size
     res = Image.new("L",(b,a),"black")
     for y in range (0,sy) :
         for x in range (0,sx) :
