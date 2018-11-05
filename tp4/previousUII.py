@@ -24,7 +24,7 @@ class Ui_mainWindow(object):
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.selectImgBtn = QtWidgets.QPushButton(self.centralwidget)
-        self.selectImgBtn.setGeometry(QtCore.QRect(60, 80, 141, 31))
+        self.selectImgBtn.setGeometry(QtCore.QRect(60, 10, 141, 31))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(10)
@@ -47,7 +47,7 @@ class Ui_mainWindow(object):
 "}")
         self.selectImgBtn.setObjectName("selectImgBtn")
         self.imageLbl = QtWidgets.QLabel(self.centralwidget)
-        self.imageLbl.setGeometry(QtCore.QRect(280, 70, 1011, 731))
+        self.imageLbl.setGeometry(QtCore.QRect(250, 70, 1011, 731))
         self.imageLbl.setAutoFillBackground(False)
         self.imageLbl.setStyleSheet("background-color:white;")
         self.imageLbl.setFrameShape(QtWidgets.QFrame.Box)
@@ -77,7 +77,7 @@ class Ui_mainWindow(object):
 "}")
         self.rotatImage.setObjectName("rotatImage")
         self.relief = QtWidgets.QPushButton(self.centralwidget)
-        self.relief.setGeometry(QtCore.QRect(60, 150, 141, 31))
+        self.relief.setGeometry(QtCore.QRect(60, 180, 141, 31))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(10)
@@ -123,7 +123,7 @@ class Ui_mainWindow(object):
 "}")
         self.fonte.setObjectName("fonte")
         self.lightIncrease = QtWidgets.QPushButton(self.centralwidget)
-        self.lightIncrease.setGeometry(QtCore.QRect(60, 280, 141, 31))
+        self.lightIncrease.setGeometry(QtCore.QRect(60, 260, 141, 31))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(10)
@@ -145,6 +145,98 @@ class Ui_mainWindow(object):
 "   color:rgb(99, 102, 112);\n"
 "}")
         self.lightIncrease.setObjectName("lightIncrease")
+        self.reduceNoise = QtWidgets.QPushButton(self.centralwidget)
+        self.reduceNoise.setGeometry(QtCore.QRect(60, 300, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.reduceNoise.setFont(font)
+        self.reduceNoise.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.reduceNoise.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.reduceNoise.setObjectName("reduceNoise")
+        self.reduceNoiseP = QtWidgets.QPushButton(self.centralwidget)
+        self.reduceNoiseP.setGeometry(QtCore.QRect(60, 340, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.reduceNoiseP.setFont(font)
+        self.reduceNoiseP.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.reduceNoiseP.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.reduceNoiseP.setObjectName("reduceNoiseP")
+        self.blur = QtWidgets.QPushButton(self.centralwidget)
+        self.blur.setGeometry(QtCore.QRect(60, 380, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.blur.setFont(font)
+        self.blur.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.blur.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.blur.setObjectName("blur")
+        self.Blurp = QtWidgets.QPushButton(self.centralwidget)
+        self.Blurp.setGeometry(QtCore.QRect(60, 420, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Blurp.setFont(font)
+        self.Blurp.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Blurp.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.Blurp.setObjectName("Blurp")
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(mainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1300, 21))
@@ -161,6 +253,10 @@ class Ui_mainWindow(object):
         self.relief.clicked.connect(self.setReliefFX)
         self.fonte.clicked.connect(self.setFontFx)
         self.lightIncrease.clicked.connect(self.increasePictureLight)
+        self.blur.clicked.connect(self.blurIMG)
+        self.Blurp.clicked.connect(self.blurpIMG)
+        self.reduceNoise.clicked.connect(self.reduceNoiseIMG)
+        self.reduceNoiseP.clicked.connect(self.reduceNoisepIMG)
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -170,6 +266,11 @@ class Ui_mainWindow(object):
         self.relief.setText(_translate("mainWindow", "Fx: Relief"))
         self.fonte.setText(_translate("mainWindow", "Fx : Fonte"))
         self.lightIncrease.setText(_translate("mainWindow", "increase Light"))
+        self.reduceNoise.setText(_translate("mainWindow", "Reduce Noise"))
+        self.reduceNoiseP.setText(_translate("mainWindow", "Reduce Noise +"))
+        self.blur.setText(_translate("mainWindow", "Blur"))
+        self.Blurp.setText(_translate("mainWindow", "Blur +"))
+
 
     def setImage(self):
         self.filename, _ = QtWidgets.QFileDialog.getOpenFileName(None,"Select Image","","Image Files (*.png *.jpg *.jpeg *.bmp *.pgm)")
@@ -183,7 +284,7 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            img1 = filtrages.filtrerImageNB(img1,xsize,ysize,5) 
+            img1 = effets_geom.RotationNB(img1,xsize,ysize) 
             qim = ImageQt(img1)
             img1.save('img.png')
             self.filename = 'img.png'
@@ -239,6 +340,69 @@ class Ui_mainWindow(object):
         else:
             print("ouvrez une image")
 
+    def reduceNoiseIMG(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size 
+            img1 = filtrages.filtrerMedianImageNB(img1,xsize,ysize,3)
+            qim = ImageQt(img1)
+            img1.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+    def reduceNoisepIMG(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size 
+            img1 = filtrages.filtrerMedianImageNBVAB(img1,xsize,ysize,3)
+            qim = ImageQt(img1)
+            img1.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+
+    def blurIMG(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size 
+            img1 = filtrages.filtrerImageNB(img1,xsize,ysize,3)
+            qim = ImageQt(img1)
+            img1.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+
+    def blurpIMG(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size 
+            img1 = filtrages.filtrerImageNBVAB(img1,xsize,ysize,3)
+            qim = ImageQt(img1)
+            img1.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -247,4 +411,3 @@ if __name__ == "__main__":
     ui.setupUi(mainWindow)
     mainWindow.show()
     sys.exit(app.exec_())
-
