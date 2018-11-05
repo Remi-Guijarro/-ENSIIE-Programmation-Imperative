@@ -2,11 +2,9 @@ from PIL import Image
 
 def effetFonteNB(img,  sx,  sy) :
     res = Image.new("L",img.size,"black")
-    print(img.size)
     for x in range (0,sx) :
         for y in range (0,sy) : 
             if(y == (sy-1)):
-                #print(sy-1,' VS  ',sy)
                 col = img.getpixel((x,sy-1))
                 res.putpixel((x,sy-1),col)
             else:                
@@ -18,11 +16,8 @@ def effetFonteNB(img,  sx,  sy) :
     return res
 
 def quartImageNB(img,  sx,  sy) :
-    print(img.size)
     newSize = (int(img.size[0]/2),int(img.size[1]/2))
     res = Image.new("L",newSize,"black")
-    print(" VS ")
-    print(res.size)
     v=0
     w=0
     for y in range (0,sy) :
@@ -31,7 +26,6 @@ def quartImageNB(img,  sx,  sy) :
             for x in range (0,sx) :
                 if((x % 2) == 0):
                     col = img.getpixel((x,y))
-                    print('v ' + str(v) + '  w ',str(w))
                     res.putpixel((w,v),col)
                     w = w + 1
             v += 1
@@ -65,5 +59,4 @@ def convertToGrayScale(img,  sx,  sy) :
             r,g,b = img.getpixel((x,y))
             grayScale = 0.707 * r + 0.202 * g + 0.071 * b
             res.putpixel((x,y),int(grayScale)) 
-    print(res.size)
     return res

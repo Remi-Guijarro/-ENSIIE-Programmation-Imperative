@@ -24,7 +24,7 @@ class Ui_mainWindow(object):
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.selectImgBtn = QtWidgets.QPushButton(self.centralwidget)
-        self.selectImgBtn.setGeometry(QtCore.QRect(60, 10, 141, 31))
+        self.selectImgBtn.setGeometry(QtCore.QRect(30, 80, 201, 31))
         font = QtGui.QFont()
         font.setFamily("Sitka Small")
         font.setPointSize(10)
@@ -237,6 +237,56 @@ class Ui_mainWindow(object):
 "   color:rgb(99, 102, 112);\n"
 "}")
         self.Blurp.setObjectName("Blurp")
+        self.rotatImage_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.rotatImage_2.setGeometry(QtCore.QRect(1140, 20, 111, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.rotatImage_2.setFont(font)
+        self.rotatImage_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.rotatImage_2.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.rotatImage_2.setObjectName("rotatImage_2")
+        self.Blurp_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.Blurp_2.setGeometry(QtCore.QRect(60, 460, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Blurp_2.setFont(font)
+        self.Blurp_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Blurp_2.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.Blurp_2.setObjectName("Blurp_2")
+        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
+        self.progressBar.setGeometry(QtCore.QRect(40, 760, 191, 23))
+        self.progressBar.setProperty("value", 24)
+        self.progressBar.setObjectName("progressBar")
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(mainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1300, 21))
@@ -257,6 +307,8 @@ class Ui_mainWindow(object):
         self.Blurp.clicked.connect(self.blurpIMG)
         self.reduceNoise.clicked.connect(self.reduceNoiseIMG)
         self.reduceNoiseP.clicked.connect(self.reduceNoisepIMG)
+        self.Blurp_2.clicked.connect(self.inversionImage)
+        self.rotatImage_2.clicked.connect(self.divideImage)
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -270,6 +322,8 @@ class Ui_mainWindow(object):
         self.reduceNoiseP.setText(_translate("mainWindow", "Reduce Noise +"))
         self.blur.setText(_translate("mainWindow", "Blur"))
         self.Blurp.setText(_translate("mainWindow", "Blur +"))
+        self.rotatImage_2.setText(_translate("mainWindow", "Divide Size"))
+        self.Blurp_2.setText(_translate("mainWindow", "Inversion"))
 
 
     def setImage(self):
@@ -284,6 +338,8 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = effets_geom.RotationNB(img1,xsize,ysize) 
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -298,7 +354,9 @@ class Ui_mainWindow(object):
     def setReliefFX(self):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
-            (xsize,ysize) = img1.size 
+            (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = effets_photom.deriv1xNB(img1,xsize,ysize)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -314,6 +372,8 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = effets_geom.effetFonteNB(img1,xsize,ysize)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -329,6 +389,8 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = effets_photom.plusClairNB(img1,xsize,ysize)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -343,7 +405,9 @@ class Ui_mainWindow(object):
     def reduceNoiseIMG(self):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
-            (xsize,ysize) = img1.size 
+            (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = filtrages.filtrerMedianImageNB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -358,7 +422,9 @@ class Ui_mainWindow(object):
     def reduceNoisepIMG(self):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
-            (xsize,ysize) = img1.size 
+            (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = filtrages.filtrerMedianImageNBVAB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -375,6 +441,8 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
             img1 = filtrages.filtrerImageNB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
             img1.save('img.png')
@@ -391,7 +459,43 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)          
             img1 = filtrages.filtrerImageNBVAB(img1,xsize,ysize,3)
+            qim = ImageQt(img1)
+            img1.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+    def divideImage(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
+            resImg = effets_geom.quartImageNB(img1,xsize,ysize) 
+            qim = ImageQt(resImg)
+            resImg.save('img.png')
+            self.filename = 'img.png'
+            self.pixmap = QtGui.QPixmap.fromImage(qim)
+            self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
+            self.imageLbl.setPixmap(self.pixmap)
+            self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
+        else:
+            print("ouvrez une image")
+
+    def inversionImage(self):
+        if(hasattr(self, 'filename')):
+            img1=Image.open(self.filename)
+            (xsize,ysize) = img1.size
+            if(effets_geom.ifRGBIMG(img1)):
+                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)          
+            img1 = effets_photom.inversion_videoNB(img1,xsize,ysize) 
             qim = ImageQt(img1)
             img1.save('img.png')
             self.filename = 'img.png'
@@ -411,3 +515,4 @@ if __name__ == "__main__":
     ui.setupUi(mainWindow)
     mainWindow.show()
     sys.exit(app.exec_())
+
