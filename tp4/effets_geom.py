@@ -2,19 +2,19 @@ from PIL import Image
 
 def effetFonteNB(img,  sx,  sy) :
     res = Image.new("L",img.size,"black")
+    print(img.size)
     for x in range (0,sx) :
-        for y in range (0,sy) :
-            if(y == sy-1):
-                col = img.getpixel ((x,y))
-                res.putpixel((x,y),col) 
-                break
+        for y in range (0,sy) : 
+            if(y == (sy-1)):
+                #print(sy-1,' VS  ',sy)
+                col = img.getpixel((x,sy-1))
+                res.putpixel((x,sy-1),col)
             else:                
                 col = img.getpixel ((x,y))
                 nextPixel = img.getpixel((x,y+1))
                 if nextPixel < col :
-                    nextPixel = col
-                    res.putpixel((x,y+1),nextPixel)
                     res.putpixel((x,y),col)
+                    res.putpixel((x,y+1),nextPixel)
     return res
 
 def quartImageNB(img,  sx,  sy) :
