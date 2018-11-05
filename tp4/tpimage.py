@@ -13,7 +13,6 @@
 
 import sys
 import random
-import PyQt5
 
 from PIL import Image
 
@@ -32,13 +31,13 @@ from filtrages import *
 
 
 def runImageTool():
-    # argc=len(sys.argv)
-    # if argc<3 :
-    #     print ("usage : ", sys.argv[0], " fichier.png fichier.png")
-    #     return
+    argc=len(sys.argv)
+    if argc<3 :
+        print ("usage : ", sys.argv[0], " fichier.png fichier.png")
+        return
     random.seed()  #initialisation du générateur pseudo-aléatoire
-    #print(sys.argv[1])
-    #img1=Image.open(sys.argv[1])
+    print(sys.argv[1])
+    img1=Image.open(sys.argv[1])
     img1=Image.open(".\\test.pgm")
     (xsize,ysize) = img1.size
     print ("Lecture OK ( H =", ysize, " L =", xsize,")")
