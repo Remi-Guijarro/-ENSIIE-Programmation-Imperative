@@ -56,6 +56,6 @@ foo@bar:~$ sudo apt-get install python3-pyqt5
   
 
 ```console
-foo@bar:~$ python advanceUI.py
+foo@bar:~$ python3 advanceUI.py
 
 ```
