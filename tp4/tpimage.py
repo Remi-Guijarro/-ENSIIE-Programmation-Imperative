@@ -104,7 +104,7 @@ def launchMenu(fichierDep,fichierDest):
                 img1 = convertToGrayScale(img1,xsize,ysize)          
             img1 = inversion_videoNB(img1,xsize,ysize) 
         else:   
-            print('Invalid Command type hep to get some help')
+            print('Invalid Command type help to get some help :) ')
         img1.show()
         user = input()
         user =  user.strip().lower()
@@ -115,7 +115,7 @@ def launchMenu(fichierDep,fichierDest):
 def runImageTool():
     argc=len(sys.argv)
     if argc<3 :
-        print ("usage : ", sys.argv[0], " fichier.png fichier.png")
+        print ("usage : ", sys.argv[0], " image_en_entrée       nom_du_fichier_pour_sauvegarde.extension_souhaité")
         return 
     imgSource =  sys.argv[1]
     savedImageName = sys.argv[2]
