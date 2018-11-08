@@ -1,7 +1,7 @@
 
 from PIL import Image
 
-def filtrerMedianImageNB(src,  sy,  sx, tailleFiltre) :
+def filtrerMedianImageNB(src,  sx,  sy, tailleFiltre) :
     res = Image.new("L",src.size,"black")
     print(res.size)
     #calcul des coordonnees (relatives a x et y : coordonnees du pixel traite) du pixel en haut a gauche dans la
@@ -36,7 +36,7 @@ def filtrerMedianImageNB(src,  sy,  sx, tailleFiltre) :
                 res.putpixel((x,y), pixel_value)
     return res
 
-def filtrerMedianImageNBVAB(src,  sy,  sx, tailleFiltre) :
+def filtrerMedianImageNBVAB(src,  sx,  sy, tailleFiltre) :
     print('debut')
     err =0
     res = Image.new("L",src.size,"black")
@@ -71,27 +71,18 @@ def filtrerMedianImageNBVAB(src,  sy,  sx, tailleFiltre) :
 
 def filtrerImageNB(src,  sy,  sx, tailleFiltre) :
     res = Image.new("L",src.size,"black")
-
-    # calcul des coordonnees (relatives a x et y : coordonnees du pixel traite) du pixel en haut a gauche dans la
-    # fenetre de voisinage de taille tailleFiltre
     xv = -1 * (tailleFiltre // 2)
     yv = -1 * (tailleFiltre // 2)
-
     for y in range(0, sy):
         for x in range(0, sx):
             pixel_value = src.getpixel((x, y))
-
-            # condition bords image
             if x + xv < 0 or y + yv < 0 or x - xv > sx - 1 or y - yv > sy - 1:
                 res.putpixel((x, y), pixel_value)
             else:
-                # nombre de pixels dans le voisinage : (taille du filtre ^ 2) - 1
                 voisinage = []
                 for i in range(0, tailleFiltre * tailleFiltre):
                     pixel_value = src.getpixel((x + xv, y + yv))
                     voisinage.append(pixel_value)
-
-                    # pixel suivant dans la fenetre
                     if xv == tailleFiltre // 2:
                         xv = -1 * (tailleFiltre // 2)
                         yv += 1
@@ -100,8 +91,6 @@ def filtrerImageNB(src,  sy,  sx, tailleFiltre) :
                     if i == tailleFiltre * tailleFiltre - 1:
                         xv = -1 * (tailleFiltre // 2)
                         yv = -1 * (tailleFiltre // 2)
-
-                # calculer la moyenne
                 pixel_value = sum(voisinage)//len(voisinage)
                 res.putpixel((x, y), pixel_value)
     return res
