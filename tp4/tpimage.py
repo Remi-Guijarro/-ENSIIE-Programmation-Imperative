@@ -78,7 +78,7 @@ def launchMenu(fichierDep,fichierDest):
         elif(user == switcher.get(3)):
             if(ifRGBIMG(img1)):
                 img1 = convertToGrayScale(img1,xsize,ysize)     
-            img1 = quartImageNB(img1,xsize,ysize)
+            img1 = quartImageNB(img1,img1.size[0],img1.size[1])
         elif(user == switcher.get(4)):
             if(ifRGBIMG(img1)):
                 img1 = convertToGrayScale(img1,xsize,ysize)     

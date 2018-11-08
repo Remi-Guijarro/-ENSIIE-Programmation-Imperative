@@ -1,18 +1,15 @@
 from PIL import Image
+from random import randrange
 
 def effetFonteNB(img,  sx,  sy) :
-    res = Image.new("L",img.size,"black")
-    for x in range (0,sx) :
-        for y in range (0,sy) : 
-            if(y == (sy-1)):
-                col = img.getpixel((x,sy-1))
-                res.putpixel((x,sy-1),col)
-            else:                
-                col = img.getpixel ((x,y))
-                nextPixel = img.getpixel((x,y+1))
-                if nextPixel < col :
-                    res.putpixel((x,y),col)
-                    res.putpixel((x,y+1),nextPixel)
+    N = sx * sy
+    res = img
+    for _ in range(0,N):
+        x = randrange(sx)
+        y = randrange(sy)
+        if(y < sy -1):
+            if(res.getpixel((x,y)) < res.getpixel((x,y+1))):
+                res.putpixel((x,y+1),res.getpixel((x,y)))
     return res
 
 def quartImageNB(img,  sx,  sy) :
@@ -20,6 +17,7 @@ def quartImageNB(img,  sx,  sy) :
     res = Image.new("L",newSize,"black")
     v=0
     w=0
+    print(res.size)
     for y in range (0,sy) :
         if((y % 2) == 0):
             w=0

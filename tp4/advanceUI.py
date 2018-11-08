@@ -515,8 +515,8 @@ class Ui_mainWindow(object):
             (xsize,ysize) = img1.size
             if(ifRGBIMG(img1)):
                 img1 = convertToGrayScale(img1,xsize,ysize)
-            resImg = quartImageNB(img1,xsize,ysize) 
-            qim = ImageQt(resImg)
+            img1 = quartImageNB(img1,xsize,ysize) 
+            qim = ImageQt(img1)
             img1.save('temporaryFile/img.png')
             self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
