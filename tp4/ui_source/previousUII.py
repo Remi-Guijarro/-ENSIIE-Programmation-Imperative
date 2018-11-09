@@ -6,10 +6,9 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-import tpimage
-import effets_geom
-import effets_photom
-import filtrages
+from effect_source.effets_geom import *
+from effect_source.effets_photom import *
+from effect_source.filtrages import *
 from PIL import Image
 from PIL.ImageQt import ImageQt
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -283,10 +282,29 @@ class Ui_mainWindow(object):
 "   color:rgb(99, 102, 112);\n"
 "}")
         self.Blurp_2.setObjectName("Blurp_2")
-        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar.setGeometry(QtCore.QRect(40, 760, 191, 23))
-        self.progressBar.setProperty("value", 24)
-        self.progressBar.setObjectName("progressBar")
+        self.save = QtWidgets.QPushButton(self.centralwidget)
+        self.save.setGeometry(QtCore.QRect(60, 590, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Sitka Small")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.save.setFont(font)
+        self.save.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.save.setStyleSheet("QPushButton{\n"
+"    color:white;\n"
+"    border:2px solid white;\n"
+"    border-radius:15px;\n"
+"    transition : all ease 1s;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover\n"
+"{\n"
+"   background-color:white;\n"
+"   color:rgb(99, 102, 112);\n"
+"}")
+        self.save.setObjectName("save")
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(mainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1300, 21))
@@ -309,6 +327,7 @@ class Ui_mainWindow(object):
         self.reduceNoiseP.clicked.connect(self.reduceNoisepIMG)
         self.Blurp_2.clicked.connect(self.inversionImage)
         self.rotatImage_2.clicked.connect(self.divideImage)
+        self.save.clicked.connect(self.saveImage)
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -324,6 +343,7 @@ class Ui_mainWindow(object):
         self.Blurp.setText(_translate("mainWindow", "Blur +"))
         self.rotatImage_2.setText(_translate("mainWindow", "Divide Size"))
         self.Blurp_2.setText(_translate("mainWindow", "Inversion"))
+        self.save.setText(_translate("mainWindow", "Save"))
 
 
     def setImage(self):
@@ -334,16 +354,33 @@ class Ui_mainWindow(object):
             self.imageLbl.setPixmap(self.pixmap)
             self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
 
+    def saveImage(self):
+        if(hasattr(self, 'filename')):
+            self.savedPath = QtWidgets.QFileDialog.getSaveFileName(None,"Save File")
+            path = ''
+            fileExtension = ''
+            if(self.savedPath[0] != ""):
+                try:
+                    path,fileExtension = self.savedPath[0].split('.')
+                except Exception:
+                    fileExtension = 'png'
+                    path = self.savedPath[0]
+                print('file will be saved at :> '+str(path+'.'+fileExtension))
+                img1=Image.open(self.filename)
+                img1.save(path+'.'+fileExtension)
+        else:
+            print('importer d\'abord une image')
+        
     def rotateImage(self):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = effets_geom.RotationNB(img1,xsize,ysize) 
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = RotationNB(img1,xsize,ysize) 
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -355,12 +392,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = effets_photom.deriv1xNB(img1,xsize,ysize)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = deriv1xNB(img1,xsize,ysize)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -372,12 +409,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = effets_geom.effetFonteNB(img1,xsize,ysize)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = effetFonteNB(img1,xsize,ysize)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -389,12 +426,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = effets_photom.plusClairNB(img1,xsize,ysize)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = plusClairNB(img1,xsize,ysize)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -406,12 +443,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = filtrages.filtrerMedianImageNB(img1,xsize,ysize,3)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = filtrerMedianImageNB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -423,12 +460,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = filtrages.filtrerMedianImageNBVAB(img1,xsize,ysize,3)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = filtrerMedianImageNBVAB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -441,12 +478,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            img1 = filtrages.filtrerImageNB(img1,xsize,ysize,3)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = filtrerImageNB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -459,12 +496,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size 
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)          
-            img1 = filtrages.filtrerImageNBVAB(img1,xsize,ysize,3)
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)          
+            img1 = filtrerImageNBVAB(img1,xsize,ysize,3)
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -476,12 +513,12 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)
-            resImg = effets_geom.quartImageNB(img1,xsize,ysize) 
-            qim = ImageQt(resImg)
-            resImg.save('img.png')
-            self.filename = 'img.png'
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)
+            img1 = quartImageNB(img1,xsize,ysize) 
+            qim = ImageQt(img1)
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
@@ -493,19 +530,18 @@ class Ui_mainWindow(object):
         if(hasattr(self, 'filename')):
             img1=Image.open(self.filename)
             (xsize,ysize) = img1.size
-            if(effets_geom.ifRGBIMG(img1)):
-                img1 = effets_geom.convertToGrayScale(img1,xsize,ysize)          
-            img1 = effets_photom.inversion_videoNB(img1,xsize,ysize) 
+            if(ifRGBIMG(img1)):
+                img1 = convertToGrayScale(img1,xsize,ysize)          
+            img1 = inversion_videoNB(img1,xsize,ysize) 
             qim = ImageQt(img1)
-            img1.save('img.png')
-            self.filename = 'img.png'
+            img1.save('temporaryFile/img.png')
+            self.filename = 'temporaryFile/img.png'
             self.pixmap = QtGui.QPixmap.fromImage(qim)
             self.pixmap = self.pixmap.scaled(self.imageLbl.width(),self.imageLbl.height(),QtCore.Qt.KeepAspectRatio)
             self.imageLbl.setPixmap(self.pixmap)
             self.imageLbl.setAlignment(QtCore.Qt.AlignCenter)
         else:
             print("ouvrez une image")
-
 
 if __name__ == "__main__":
     import sys
